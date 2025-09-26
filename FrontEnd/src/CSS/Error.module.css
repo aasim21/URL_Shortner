@@ -1,0 +1,13 @@
+.main_container{
+    width:50%;
+    background: transparent;
+    border-radius: 0.4rem;
+    padding-left: 1.5rem;
+    overflow: hidden;
+}
+
+.error{
+    font-size: 1rem;
+    color:#ed5e93;
+    overflow-wrap: break-word;
+}
