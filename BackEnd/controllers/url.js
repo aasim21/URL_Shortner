@@ -23,9 +23,9 @@ const handleGenerateNewShortURL = [
     if(!errors.isEmpty()) return res.status(422).json({errorMessage: errors.array()[0].msg});
 
     //Checking for duplicate URLs
-    const isExist = URL.findOne({redirectURL: body.url});
+    const isExist = await URL.findOne({redirectURL: body.url});
     if(isExist){
-    const short_url = `http://localhost:${PORT}/${shortID}`;
+    const short_url = `http://localhost:${PORT}/${isExist.short_id}`;
     return res.status(200).json({ url: short_url });
     }
     //Generating Unique ShortID
@@ -42,7 +42,7 @@ const handleGenerateNewShortURL = [
     });
 
     if(result){
-    const short_url = `http://localhost:${PORT}/${shortID}`;
+    const short_url = `http://localhost:${PORT}/${result.short_id}`;
     return res.status(200).json({ url: short_url });
     }
   } catch(error) {
