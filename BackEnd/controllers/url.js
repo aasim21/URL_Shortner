@@ -17,11 +17,24 @@ const handleGenerateNewShortURL = [
 
   async(req, res) => {
   try {
+    //Validating FrontEnd Data
     const body =  req.body;
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(422).json({errorMessage: errors.array()[0].msg});
-    const shortID = shortid();
 
+    //Checking for duplicate URLs
+    const isExist = URL.findOne({redirectURL: body.url});
+    if(isExist){
+    const short_url = `http://localhost:${PORT}/${shortID}`;
+    return res.status(200).json({ url: short_url });
+    }
+    //Generating Unique ShortID
+    let shortID ;
+    while(true){
+    shortID = shortid();
+    const isshortIdExist = await URL.findOne({short_id: shortID});
+    if(!isshortIdExist) break;
+    }
     const result = await URL.create({
       short_id: shortID,
       redirectURL: body.url,
