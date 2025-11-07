@@ -31,7 +31,6 @@ export default function InputElement() {
       const URL = inputURL.current.value;
       setIsLoading(true);
       const short_url = await generate_Short_URL(URL);
-      setIsLoading(false);
       if (short_url.errorMessage) throw short_url;
       if (short_url.url) {
         dispatch(URLActions.Get_ShortURL(short_url.url));
@@ -39,6 +38,8 @@ export default function InputElement() {
       }
     } catch (error) {
       dispatch(errorActions.update_slice(error));
+    } finally{
+        setIsLoading(false);
     }
   };
 
@@ -63,7 +64,7 @@ export default function InputElement() {
             required
           />
         </div>
-        <button className={styles.enter_btn} type="submit">
+        <button className={styles.enter_btn} type="submit" disabled = {isLoading}>
           <CiRedo
             className={isLoading && styles.animate}
             size="1.2rem"
