@@ -4,7 +4,7 @@ const URL = require("../models/url");
 const shortid = require("shortid");
 const { findByIdAndUpdate } = require("../models/url");
 //PORT NUMBER
-const PORT = 8000;
+const PORT = process.env.PORT || 5000;
 
 //Handling New URL
 const handleGenerateNewShortURL = [
@@ -85,5 +85,4 @@ module.exports = {
   handleGenerateNewShortURL,
   handleGetAnalytics,
   handleRedirectURL,
-  PORT,
 };

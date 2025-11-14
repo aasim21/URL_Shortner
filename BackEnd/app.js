@@ -1,18 +1,30 @@
 //Imports
 const express = require("express");
+const dotenv = require("dotenv");
 const { connectToMongoDB } = require("./connect");
 const urlRoute = require("./routes/url");
-const { PORT, handleRedirectURL } = require("./controllers/url");
+const { handleRedirectURL } = require("./controllers/url");
 const cors = require("cors");
 const { handleExpiredURL } = require("./Scheduler/cleaner");
 
 //Initialising App
 const app = express();
 
+//ENV configuration
+
+dotenv.config();
+
 app.use(cors());
 
+//PORT No
+
+const PORT = process.env.PORT || 5000;
+
 //Connecting to mongoDB
-connectToMongoDB("mongodb://127.0.0.1:27017/short_url")
+connectToMongoDB(process.env.MONGO_URI, {
+  tls: true,
+  tlsAllowInvalidCertificates: true,
+})
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
