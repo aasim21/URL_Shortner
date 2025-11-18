@@ -14,7 +14,6 @@ const app = express();
 
 dotenv.config();
 
-app.use(cors());
 
 //PORT No
 
@@ -36,6 +35,8 @@ connectToMongoDB(process.env.MONGO_URI, {
 //Handling MiddleWares
 
 app.use(express.json());
+
+app.use(cors());
 
 //Handling Routes MiddleWares
 
