@@ -5,7 +5,7 @@ const { connectToMongoDB } = require("./connect");
 const urlRoute = require("./routes/url");
 const { handleRedirectURL } = require("./controllers/url");
 const cors = require("cors");
-const { handleExpiredURL } = require("./Scheduler/cleaner");
+const cleanerRoute = require("./routes/cleanup");
 
 //Initialising App
 const app = express();
@@ -30,7 +30,6 @@ connectToMongoDB(process.env.MONGO_URI, {
     app.listen(PORT, () => {
       console.log(`Server has been started at PORT ${PORT}`);
     });
-    handleExpiredURL();
   })
   .catch((err) => console.log(err));
 
@@ -42,7 +41,11 @@ app.use(express.json());
 
 app.use("/api/url", urlRoute);
 
+app.use("/api/cleanup", cleanerRoute);
+
 app.get("/:id", handleRedirectURL);
+
+
 
 app.use((req, res, next) => {
   res.json({ errorMessage: "Page Not Found" });

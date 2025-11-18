@@ -1,13 +1,12 @@
 .main_container{
     width: 50%;
-    height:5rem;
+    /* height:5rem; */
     text-align: center;
-    /* border:1px solid #fff; */
-    margin-top: 3rem;
+    margin-top: 5rem;
 }
 
 .title{
     color:#fff;
-    line-height: 5rem;
+    white-space: nowrap;
     font-family: "Gravitas One";
 }

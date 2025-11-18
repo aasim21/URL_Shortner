@@ -12,7 +12,7 @@
 }
 
 .input_container{
-    width:100%;
+    width:90%;
     display: flex;
     border:1px solid #454545;
     height:3rem;
@@ -70,5 +70,16 @@
     }
     100%{
         transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width:500px){
+    .main_container{
+        width:100%;
+        padding:2rem;
+        padding-bottom: 1rem;
+    }
+    .icon{
+        width:3rem;
     }
 }

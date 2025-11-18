@@ -28,7 +28,7 @@ export default function OutputElement() {
   return (
     <div className={styles.main_container}>
       <input
-        className={`${styles.input} ${styles.result_input}`}
+        className={styles.result_input}
         type="url"
         ref={outpuURL}
         value = {shortURL}

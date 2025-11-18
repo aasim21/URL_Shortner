@@ -1,17 +1,15 @@
-const URL = require('../models/url');
+const URL = require("../models/url");
 
-const handleExpiredURL = () => {
-    const delay = 24*60*60*1000;
-    setInterval(async() => {
-        const now  = Date.now();
-        try{
-            const result = await URL.deleteMany({expiresAt:{$lt:now}});
-        }catch(error){
-            console.log(error);
-        }
-    },delay);
-}
+const handleExpiredURL = async (req,res) => {
+  try {
+    const now = Date.now();
+    const result = await URL.deleteMany({ expiresAt: { $lt: now } });
+    res.status(200).send("CleanUp Executed");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-module.exports={
-    handleExpiredURL
-}
+module.exports = {
+  handleExpiredURL,
+};
