@@ -20,6 +20,19 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
+//Connecting to mongoDB
+connectToMongoDB(process.env.MONGO_URI, {
+  tls: true,
+  tlsAllowInvalidCertificates: true,
+})
+  .then(() => {
+    console.log("Connected to MongoDB");
+    app.listen(PORT, () => {
+      console.log(`Server has been started at PORT ${PORT}`);
+    });
+  })
+  .catch((err) => console.log(err));
+  
 //Handling MiddleWares
 
 app.use(express.json());
@@ -36,15 +49,5 @@ app.use((req, res, next) => {
   res.json({ errorMessage: "Page Not Found" });
 });
 
-//Connecting to mongoDB
-connectToMongoDB(process.env.MONGO_URI, {
-  tls: true,
-  tlsAllowInvalidCertificates: true,
-})
-  .then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(PORT, () => {
-      console.log(`Server has been started at PORT ${PORT}`);
-    });
-  })
-  .catch((err) => console.log(err));
+
+
