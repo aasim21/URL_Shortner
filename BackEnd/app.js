@@ -14,10 +14,27 @@ const app = express();
 
 dotenv.config();
 
+app.use(cors());
 
 //PORT No
 
 const PORT = process.env.PORT || 5000;
+
+//Handling MiddleWares
+
+app.use(express.json());
+
+//Handling Routes MiddleWares
+
+app.use("/api/url", urlRoute);
+
+app.use("/api/cleanup", cleanerRoute);
+
+app.get("/:id", handleRedirectURL);
+
+app.use((req, res, next) => {
+  res.json({ errorMessage: "Page Not Found" });
+});
 
 //Connecting to mongoDB
 connectToMongoDB(process.env.MONGO_URI, {
@@ -31,23 +48,3 @@ connectToMongoDB(process.env.MONGO_URI, {
     });
   })
   .catch((err) => console.log(err));
-
-//Handling MiddleWares
-
-app.use(express.json());
-
-app.use(cors());
-
-//Handling Routes MiddleWares
-
-app.use("/api/url", urlRoute);
-
-app.use("/api/cleanup", cleanerRoute);
-
-app.get("/:id", handleRedirectURL);
-
-
-
-app.use((req, res, next) => {
-  res.json({ errorMessage: "Page Not Found" });
-});
